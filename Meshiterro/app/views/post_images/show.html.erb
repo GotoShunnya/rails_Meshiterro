@@ -14,13 +14,15 @@
 <div class="comments" >
   <p>コメント件数:<%= @post_image.post_comments.count %></p>
   <% @post_image.post_comments.each do |post_comment| %>
-  <p><%= image_tag("sample-author1.jpg") %></p>
+  <p><%= attachment_image_tag post_comment.user, :profile_image, fallback:"no_image.jpg", size:"60x60" %></p>
   <%= post_comment.user.name %>
   <%= post_comment.created_at.strftime("%Y/%m/%d") %><%= post_comment.comment %>
+  <% end %>
+  </div>
 
-  <% if post_comment.user == current_user %>
+  <% if @post_comment.user == current_user %>
   <div class= "comment-delete">
-    <%= link_to"削除",post_image_post_comment_path(post_comment.post_image,post_comment),method: :delete %>
+    <%= link_to "削除",post_image_post_comment_path(post_comment.post_image,post_comment),method: :delete %>
   </div>
   <% end %>
 
@@ -46,7 +48,3 @@
   <%= f.submit "送信" %>
   <% end %>
 </div>
-
-
-
-<% end %>
